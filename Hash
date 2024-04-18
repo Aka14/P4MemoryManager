@@ -1,0 +1,92 @@
+
+public class Hash {
+
+    private int size;
+    private Seminar[] hashTable;
+
+    public Hash(int hashSize) {
+        size = hashSize;
+        hashTable = new Seminar[hashSize];
+    }
+
+
+    public int h1(int k) {
+        return k % size;
+    }
+
+
+    public int h2(int k) {
+        return (((k / size) % (size / 2)) * 2) + 1;
+    }
+
+
+    public void insert(int key, Seminar val) {
+        int pos = h1(key);
+        if (hashTable[pos] == null) {
+            hashTable[pos] = val;
+        }
+        else {
+            int i = h2(key);
+            pos = h1(pos + i);
+            while (hashTable[pos] != null) {
+                pos = h1(pos + i);
+            }
+            hashTable[pos] = val;
+        }
+    }
+
+
+    public Seminar search(int key) {
+        int pos = h1(key);
+        if (hashTable[pos] != null) {
+            return hashTable[pos];
+        }
+        else {
+            int inc = h2(key);
+            pos = h1(pos + inc);
+            while (hashTable[pos] == null) {
+                pos = h1(pos + inc);
+            }
+            return hashTable[pos];
+        }
+    }
+
+
+    public void delete(int key) {
+        int pos = h1(key);
+        Tombstone t = new Tombstone();
+        if (hashTable[pos] != null || hashTable[pos].getClass() != t
+            .getClass()) {
+            hashTable[pos] = t;
+            return;
+        }
+        else {
+            int inc = h2(key);
+            pos = h1(pos + inc);
+            while (hashTable[pos] == null || hashTable[pos].getClass() == t
+                .getClass()) {
+                pos = h1(pos + inc);
+            }
+            hashTable[pos] = t;
+        }
+    }
+
+
+    public void print() {
+        System.out.println("TABLE PRINT:");
+        Tombstone t = new Tombstone();
+        for (int i = 0; i < size; i++) {
+            if (hashTable[i] == null) {
+                System.out.println(hashTable[i]);
+            }
+            else {
+                if (hashTable[i].getClass() == t.getClass()) {
+                    System.out.println("TOMBSTONE at pos" + i);
+                }
+                else {
+                    System.out.println("Seminar at pos " + i);
+                }
+            }
+        }
+    }
+}
