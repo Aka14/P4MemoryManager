@@ -1,0 +1,51 @@
+import student.TestCase;
+
+public class HashTest extends TestCase {
+    private Hash table;
+
+    public void setUp() {
+        table = new Hash(16);
+    }
+
+
+    public void testInsert() {
+        Seminar s1 = new Seminar();
+        Seminar s2 = new Seminar();
+        Seminar s3 = new Seminar();
+
+        table.insert(55, s1);
+        table.insert(39, s2);
+        table.insert(92, s3);
+//        table.print();
+    }
+
+
+    public void testSearch() {
+        Seminar s1 = new Seminar();
+        Seminar s2 = new Seminar();
+        Seminar s3 = new Seminar();
+
+        table.insert(55, s1);
+        table.insert(39, s2);
+        table.insert(92, s3);
+
+        assertEquals(table.search(55), s1);
+// assertEquals(table.search(54), s1);
+// assertEquals(table.search(92), s2);
+    }
+
+
+    public void testDelete() {
+        Seminar s1 = new Seminar();
+        Seminar s2 = new Seminar();
+        Seminar s3 = new Seminar();
+
+        table.insert(55, s1);
+        table.insert(39, s2);
+        table.insert(92, s3);
+
+        table.delete(55);
+        table.print();
+        table.delete(55);
+    }
+}
