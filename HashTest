@@ -1,51 +1,76 @@
+
 import student.TestCase;
 
 public class HashTest extends TestCase {
-    private Hash table;
+    private Hash t2;
 
     public void setUp() {
-        table = new Hash(16);
+        t2 = new Hash(10);
     }
 
-
+    
     public void testInsert() {
-        Seminar s1 = new Seminar();
-        Seminar s2 = new Seminar();
-        Seminar s3 = new Seminar();
+        Record r1 = new Record(1, new Handle(24, 20));
+        Record r2 = new Record(35, new Handle(44, 30));
+        Record dupeOfr2 = new Record(35, new Handle(15, 30));
+        Record r4 = new Record(28, new Handle(13, 45));
+        Record r5 = new Record(47, new Handle(0, 20));
+        Record r6 = new Record(63, new Handle(10, 30));
+        Record r7 = new Record(0, new Handle(50, 30));
+        
 
-        table.insert(55, s1);
-        table.insert(39, s2);
-        table.insert(92, s3);
-//        table.print();
+        t2.insert(r1);
+        t2.insert(r2);
+        t2.insert(dupeOfr2);
+        t2.insert(r4);
+        t2.insert(r5);
+        t2.insert(r6);
+        t2.insert(r7);
+        assertEquals(20, t2.capacity());
+        t2.insert(new Record(55, new Handle(3, 2)));
+        //t2.print();
+        
     }
 
 
     public void testSearch() {
-        Seminar s1 = new Seminar();
-        Seminar s2 = new Seminar();
-        Seminar s3 = new Seminar();
+        Record r1 = new Record(1, new Handle(24, 20));
+        Record r2 = new Record(35, new Handle(44, 30));
+        Record r4 = new Record(28, new Handle(13, 45));
+        Record r5 = new Record(47, new Handle(0, 20));
 
-        table.insert(55, s1);
-        table.insert(39, s2);
-        table.insert(92, s3);
+        t2.insert(r1);
+        t2.insert(r2);
+        t2.insert(r4);
 
-        assertEquals(table.search(55), s1);
-// assertEquals(table.search(54), s1);
-// assertEquals(table.search(92), s2);
+        assertEquals(r1, t2.search(1));
+        assertNull(t2.search(3));
+        t2.delete(28);
+        assertNull(t2.search(28));
+        //t2.print();
     }
 
-
     public void testDelete() {
-        Seminar s1 = new Seminar();
-        Seminar s2 = new Seminar();
-        Seminar s3 = new Seminar();
+        Record r1 = new Record(1, new Handle(24, 20));
+        Record r2 = new Record(35, new Handle(44, 30));
+        Record r4 = new Record(28, new Handle(13, 45));
+        Record r5 = new Record(47, new Handle(0, 20));
 
-        table.insert(55, s1);
-        table.insert(39, s2);
-        table.insert(92, s3);
-
-        table.delete(55);
-        table.print();
-        table.delete(55);
+        t2.insert(r1);
+        t2.insert(r2);
+        t2.insert(r4);
+        assertEquals(3, t2.size());
+        
+        t2.delete(1);
+        t2.print();
+        assertEquals(2, t2.size());
+        t2.delete(35);
+        t2.delete(3);
+        t2.delete(28);
+        t2.print();
+        t2.insert(new Record(25, new Handle(20, 10)));
+        t2.print();
+        t2.delete(25);
+        
     }
 }
