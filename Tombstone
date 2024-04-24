@@ -1,6 +1,0 @@
-
-public class Tombstone extends Seminar {
-    public Tombstone() {
-        super();
-    }
-}
