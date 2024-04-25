@@ -4,8 +4,8 @@ import java.io.IOException;
  * Handle the Seminar database. This class processes commands by manipulating
  * the hash table.
  *
- * @author {Your Name Here}
- * @version {Put Something Here}
+ * @author asifrahman
+ * @version 4/15/2024
  */
 public class SeminarDB
 {
@@ -16,7 +16,7 @@ public class SeminarDB
      * Create a new SeminarDB object.
      *
      * @param initMemSize
-     *            Initial ize for memory pool
+     *            Initial size for memory pool
      * @param initHashSize
      *            Initial size for hash tables
      * @throws IOException
@@ -46,7 +46,19 @@ public class SeminarDB
         int sx, int sy, int scost, String[] skeywords, String sdesc)
         throws Exception
     {
-        //TODO: Implement this method
+        Seminar semInsert = new Seminar(sID, stitle, sdate, slength, (short)sx, (short)sy, scost, skeywords, sdesc);
+
+        Record semRec = new Record(sID, semInsert);
+        if(myHashTable.search(sID) != null) {
+            System.out.println("Insert FAILED - There is already a record with ID "+sID);
+            return;
+        }
+        myHashTable.insert(semRec);
+        System.out.println("Successfully inserted record with ID "+sID);
+        System.out.println(semInsert.toString());
+        byte[] byteSize = semInsert.serialize();
+        System.out.println("Size: "+byteSize.length);
+        
     }
 
     // ----------------------------------------------------------
@@ -58,7 +70,9 @@ public class SeminarDB
     public void delete(int sID)
         throws IOException
     {
-        //TODO: Implement this method
+        if(myHashTable.search(sID) == null) return;
+        myHashTable.delete(sID);
+        System.out.println("Record with ID "+sID+" successfully deleted from the database");
     }
 
     // ----------------------------------------------------------
@@ -71,7 +85,13 @@ public class SeminarDB
     public void search(int sID)
         throws IOException, Exception
     {
-        //TODO: Implement this method
+        if(myHashTable.search(sID) == null) {
+            System.out.println("Search FAILED -- There is no record with ID "+sID);
+            return;
+        }
+        Record some = myHashTable.search(sID);
+        System.out.println("Found record with ID "+sID+":");
+        System.out.println(some.getSem().toString());
     }
 
     // ----------------------------------------------------------
@@ -80,9 +100,10 @@ public class SeminarDB
      * @return Number of records in table
      * @throws IOException
      */
-    public int hashprint()
+    public void hashprint()
         throws IOException
     {
+        myHashTable.print();
         //TODO: Implement this method
     }
 
