@@ -3,11 +3,14 @@
  * {Project Description Here}
  */
 
+import java.io.File;
+import java.io.IOException;
+
 /**
  * The class containing the main method.
  *
- * @author {Your Name Here}
- * @version {Put Something Here}
+ * @author asifrahman
+ * @version 4/15/2024
  */
 
 // On my honor:
@@ -38,5 +41,13 @@ public class SemManager {
     public static void main(String[] args) {
         // This is the main file for the program.
         Seminar dum = new Seminar();
+        try {
+            CommandProcessor cmP = new CommandProcessor(new SeminarDB(Integer.parseInt(args[0]), Integer.parseInt(args[1])));
+            File f = new File(args[2]);
+            cmP.readCmdFile(f);
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 }
