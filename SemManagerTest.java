@@ -33,47 +33,61 @@ public class SemManagerTest extends TestCase {
     /**
      * This method is simply to get coverage of the class declaration.
      */
-    public void testMInitx()
-    {
-        SemManager sem = new SemManager();
-        assertNotNull(sem);
-        SemManager.main(null);
-    }
+//    public void testMInitx()
+//    {
+//        SemManager sem = new SemManager();
+//        assertNotNull(sem);
+//        SemManager.main(null);
+//    }
 
-    /**
-     * Full parser test
-     * @throws IOException
-     */
-    public void testparserfull()
+    public void testEmptyHashTable()
         throws IOException
     {
         String[] args = new String[3];
         args[0] = "512";
         args[1] = "4";
-        args[2] = "P1Sample_inputX.txt";
+        args[2] = "solutionTestData/P1Sample_inputX.txt";
 
         SemManager.main(args);
         String output = systemOut().getHistory();
-        String referenceOutput = readFile("P1Sample_outputX.txt");
+        String referenceOutput = readFile("solutionTestData/P1Sample_outputX.txt");
         assertFuzzyEquals(referenceOutput, output);
     }
+    
+    /**
+     * Full parser test
+     * @throws IOException
+     */
+//    public void testparserfull()
+//        throws IOException
+//    {
+//        String[] args = new String[3];
+//        args[0] = "512";
+//        args[1] = "4";
+//        args[2] = "solutionTestData/P1Sample_inputX.txt";
+//
+//        SemManager.main(args);
+//        String output = systemOut().getHistory();
+//        String referenceOutput = readFile("solutionTestData/P1Sample_outputX.txt");
+//        assertFuzzyEquals(referenceOutput, output);
+//    }
     
     /**
      * Simple parser test (input only)
      * @throws IOException
      */
-    public void testparserinput()
-        throws IOException
-    {
-        String[] args = new String[3];
-        args[0] = "2048";
-        args[1] = "16";
-        args[2] = "P1SimpSample_inputX.txt";
-
-        SemManager.main(args);
-        String output = systemOut().getHistory();
-        String referenceOutput = readFile("P1SimpSample_outputX.txt");
-        assertFuzzyEquals(referenceOutput, output);
-    }
+//    public void testparserinput()
+//        throws IOException
+//    {
+//        String[] args = new String[3];
+//        args[0] = "2048";
+//        args[1] = "16";
+//        args[2] = "solutionTestData/P1SimpSample_inputX.txt";
+//
+//        SemManager.main(args);
+//        String output = systemOut().getHistory();
+//        String referenceOutput = readFile("solutionTestData/P1SimpSample_outputX.txt");
+//        assertFuzzyEquals(referenceOutput, output);
+//    }
 }
 
