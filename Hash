@@ -13,6 +13,10 @@ public class Hash {
     public int capacity() {
         return this.capacity;
     }
+    
+    public int size() {
+        return this.size;
+    }
 
 
     public int h1(int k) {
@@ -36,6 +40,7 @@ public class Hash {
                 insert(temp[i]);
             }
         }
+        System.out.println("Hash table expanded to "+this.capacity);
     }
 
 
@@ -48,7 +53,6 @@ public class Hash {
     public void insert(Record val) {
         int pos = h1(val.getId());
         int i = h2(val.getId());
-        if(this.search(val.getId()) != null) return;
         while(hashTable[pos] != null && hashTable[pos].getId() != -1) {
             pos = h1(pos + i);
         }
@@ -58,13 +62,14 @@ public class Hash {
             expandCapacity();
         }
     }
-
-
+    
+    
+    
     public Record search(int key) {
         int pos = h1(key);
         int i = h2(key);
         
-        while(hashTable[pos] != null && hashTable[pos].getId() != -1) {
+        while(hashTable[pos] != null) {
             if(hashTable[pos].getId() == key) return hashTable[pos];
             pos = h1(pos + i);
         }
@@ -76,18 +81,23 @@ public class Hash {
         int pos = h1(key);
         int i = h2(key);
         Record tombS = new Record(-1, null);
-        while(hashTable[pos] == null && hashTable[pos].getId() == -1) {
+        while(hashTable[pos] != null) {
+            if(hashTable[pos].getId() == key) {
+                hashTable[pos] = tombS;
+                size--;
+            }
             pos = h1(pos + i);
         }
-        if (hashTable[pos].getId() != -1) {
-            hashTable[pos] = tombS;
-        }
+//        if (hashTable[pos].getId() != -1) {
+//            hashTable[pos] = tombS;
+//            size--;
+//            System.out.println("Record with ID "+key+" successfully deleted from the database");
+//        }
     }
 
 
     public void print() {
         System.out.println("Hashtable:");
-        int count = 0;
         for (int i = 0; i < capacity; i++) {
             if (hashTable[i] == null) {
                 continue;
@@ -97,9 +107,9 @@ public class Hash {
             }
             else {
                 System.out.println(i + ": " + hashTable[i].getId());
-                count++;
+                //count++;
             }
         }
-        System.out.println("total records: "+count);
+        System.out.println("total records: "+size);
     }
 }
