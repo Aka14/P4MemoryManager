@@ -70,7 +70,10 @@ public class SeminarDB
     public void delete(int sID)
         throws IOException
     {
-        if(myHashTable.search(sID) == null) return;
+        if(myHashTable.search(sID) == null) {
+            System.out.println("Delete FAILED -- There is no record with ID "+sID);
+            return;
+        }
         myHashTable.delete(sID);
         System.out.println("Record with ID "+sID+" successfully deleted from the database");
     }
