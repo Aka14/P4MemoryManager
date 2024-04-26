@@ -98,8 +98,8 @@ public class CommandProcessor
                         ptype = sc.next();
                         if (ptype.equals("hashtable"))
                         {
-                            cnt = myWorld.hashprint();
-                            System.out.println("total records: " + cnt);
+                            myWorld.hashprint();
+                            //System.out.println("total records: " + cnt);
                         }
                         else if (ptype.equals("blocks"))
                         {
