@@ -76,7 +76,7 @@ public class MemManager {
             }
         }
         if(block == null) {
-            
+            expandMemManager();
         }
         while(freeBlockIndex > ceiling && freeBlockList[freeBlockIndex].get(0)!= null) {
             freeBlockList[freeBlockIndex].remove(0);
@@ -95,6 +95,20 @@ public class MemManager {
         // split available block into two
         // add second block to corresponding list
         // repeat process with first block
+    }
+
+    @SuppressWarnings("unchecked")
+    private void expandMemManager() {
+        //memCapacity *= 2;
+        byte[] newMemPool = new byte[memCapacity*2];
+        System.arraycopy(this.memPool, 0, newMemPool, 0, memCapacity);
+        this.memPool = newMemPool;
+        memCapacity = memPool.length;
+        LinkedList<FreeBlock>[] newFBL = new LinkedList[this.sizeOfFBL()+1];
+        System.arraycopy(this.freeBlockList, 0, newFBL, 0, this.freeBlockList.length);
+        this.freeBlockList = newFBL;
+        freeBlockList[sizeOfFBL()-2].add(new FreeBlock((int)Math.pow(2.0, sizeOfFBL()-2)));
+        
     }
 
     // Return the length of the record associated with theHandle
