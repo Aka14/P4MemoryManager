@@ -1,17 +1,35 @@
 
 import student.TestCase;
+// -------------------------------------------------------------------------
+/**
+ *  MemManagerTest: Tests MemManager class
+ * 
+ *  @author asifrahman
+ *  @version Apr 28, 2024
+ */
 public class MemManagerTest extends TestCase{
     private MemManager m1;
     
+    /**
+     * Sets up memManager to be used in tests
+     */
     public void setUp() {
         m1 = new MemManager(256);
         
     }
     
+    // ----------------------------------------------------------
+    /**
+     * tests sizeOfFBL
+     */
     public void testSize() {
         assertEquals(9, m1.sizeOfFBL());
     }
     
+    // ----------------------------------------------------------
+    /**
+     * Tests insert method
+     */
     public void testInsert() {
         byte[] arr = new byte[28];
         arr[0] = 0x28;
@@ -34,6 +52,10 @@ public class MemManagerTest extends TestCase{
         assertEquals(129, m1.length(h3));
         assertEquals(10, m1.sizeOfFBL());
         assertEquals(512, m1.getMemCapacity());
+    }
+    
+    public void testMulti() {
+        
     }
 
 }
