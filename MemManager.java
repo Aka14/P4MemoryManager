@@ -174,26 +174,26 @@ public class MemManager {
 
 
     private void checkBuddy(int startPos, int powerOf2) {
-        if (freeBlockList[powerOf2].size() < 1) {
-            freeBlockList[powerOf2].add(new FreeBlock(startPos));
+        if (freeBlockList[powerOf2].size() < 1) { // Case 1: When that blockSize index is not free at all
+            freeBlockList[powerOf2].add(new FreeBlock(startPos)); // Insert at specific index
             return;
         }
-        FreeBlock head = freeBlockList[powerOf2].get(0);
-        if (head.getStart() > startPos) {
-            boolean checkBud = calcBuddy(startPos, head.getStart(), (int)Math
+        FreeBlock head = freeBlockList[powerOf2].get(0); 
+        if (head.getStart() > startPos) { // Case 2: When the thing to remove starts before the head
+            boolean checkBud = calcBuddy(startPos, head.getStart(), (int)Math //checks if it is buddy with head
                 .pow(2, powerOf2));
             if (checkBud) {
-                freeBlockList[powerOf2].remove(0);
-                checkBuddy(startPos, powerOf2+1);
+                freeBlockList[powerOf2].remove(0); // If true, then pop head and merge as greater block
+                checkBuddy(startPos, powerOf2+1); //recursively check with next index
             }else {
-                freeBlockList[powerOf2].add(0, new FreeBlock(startPos));
+                freeBlockList[powerOf2].add(0, new FreeBlock(startPos)); //else add as new head of list at powerOf2 index
             }
-        }else {
+        }else { //Case 3: When it is greater start position than the head of the powerOf2 index list
             for(int k = 0; k<freeBlockList[powerOf2].size(); k++) {
-                if(startPos < freeBlockList[powerOf2].get(k).getStart()) {
+                if(startPos < freeBlockList[powerOf2].get(k).getStart()) { // Checks if the current block of the for loop is buddy with the thing to remove
                     boolean checkBud = calcBuddy(startPos, head.getStart(), (int)Math
                         .pow(2, powerOf2));
-                    if (checkBud) {
+                    if (checkBud) { //Repeat same merging as case 2
                         freeBlockList[powerOf2].remove(0);
                         checkBuddy(startPos, powerOf2+1);
                     }else {
@@ -201,8 +201,8 @@ public class MemManager {
                     }
                     break;
                 }
-            }
-            if(startPos > freeBlockList[powerOf2].getLast().getStart()) {
+            } 
+            if(startPos > freeBlockList[powerOf2].getLast().getStart()) { //Adds to end of the list at the powerOf2 index of the FreeBlockList
                 freeBlockList[powerOf2].add(new FreeBlock(startPos));
             }
         }
